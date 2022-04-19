@@ -29,7 +29,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: ${{ github.action_path }}/upload.sh
+    - run: |
+        chmod u+x ${{ github.action_path }}/upload.sh
+        ${{ github.action_path }}/upload.sh
       shell: bash
       env:
         KOBITON_USERNAME: '{{ inputs.kobi_username }}'
