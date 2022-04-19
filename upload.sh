@@ -7,9 +7,9 @@ printf "\n======================================================================
 
 printf "Installing ack...\n"
 
-chmod 755 /usr/local/bin
+sudo chmod 755 /usr/local/bin
 bash -c "curl -L https://beyondgrep.com/ack-v3.5.0 >/usr/local/bin/ack"
-chmod 755 /usr/local/bin/ack
+sudo chmod 755 /usr/local/bin/ack
 
 printf "Finish downloading ack\n"
 
