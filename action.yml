@@ -1,23 +1,43 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Upload app Kobiton'
+author: 'Kobiton'
+description: 'Action to upload mobile app to Kobiton Apps Repo'
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
+  kobi_username:
+    description: The user in Kobiton
     required: true
-    default: 'World'
-outputs:
-  random-number:
-    description: 'Random number'
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+  kobi_api_key:
+    description: Specific key to access Kobiton API
+    required: true
+  upload_app_id:
+    description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton
+    required: false
+  app_access:
+    description: You can either make this app private or available for everyone in the organization (private vs. public)
+    required: true
+    default: 'public'
+  app_name:
+    description: Title of the app to be built
+    required: true
+    default: 'App-test-name'
+  app_path:
+    description: Path to the app .apk or .ipa file (relative to your current point)
+    required: true
+  app_suffix:
+    description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
+    required: true
+    default: 'apk'
 runs:
   using: 'composite'
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
+    - run: ${{ github.action_path }}/upload.sh
       shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    - run: goodbye.sh
-      shell: bash
+      env:
+        KOBITON_USERNAME: '{{ inputs.kobi_username }}'
+        KOBITON_API_KEY: '{{ inputs.kobi_api_key }}'
+        UPLOAD_APP_ID: '{{ inputs.upload_app_id }}'
+        APP_ACCESS: '{{ inputs.app_access }}'
+        APP_NAME: '{{ inputs.app_name }}'
+        APP_PATH: '{{ inputs.app_path }}'
+        APP_SUFFIX: '{{ inputs.app_suffix }}'
+branding:
+  color: purple
