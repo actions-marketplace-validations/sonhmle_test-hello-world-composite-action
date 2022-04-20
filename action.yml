@@ -27,13 +27,13 @@ inputs:
   #   required: true
   #   default: 'apk'
   executor_url:
-    description: Kobiton Automation Test Executor URL to perform
+    description: Kobiton Automation Test Executor URL to perform the test, please contact our Support Team to get this
     required: true
   executor_username:
-    description: Kobiton Automation Test Executor username
+    description: Kobiton Automation Test Executor username, please contact our Support Team to get this
     required: true
   executor_password:
-    description: Kobiton Automation Test Executor password
+    description: Kobiton Automation Test Executor password, please contact our Support Team to get this
     required: true
   git_repo_url:
     description: Link to your Git repository
@@ -45,7 +45,7 @@ inputs:
     description: It is used when your Git repository is private
     required: false
   app_id:
-    description: App ID or App URL to use in test script
+    description: App ID or App URL to use in test script, for example 'kobiton-store:123458'
     required: false
   use_custom_device:
     description: Check if you want to execute one or some test cases with a specific Kobiton Cloud Device. If you already set your device information in your test script, leave this field unchecked
@@ -117,6 +117,5 @@ runs:
         COMMAND: ${{ inputs.command }}
         WAIT_FOR_EXECUTION: ${{ inputs.wait_for_execution }}
         LOG_TYPE: ${{ inputs.log_type }}
-        GITHUB_ACTION_PATH: ${{ github.action_path }}
 branding:
   color: purple
