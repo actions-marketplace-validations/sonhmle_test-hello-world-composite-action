@@ -1,6 +1,6 @@
-name: 'Upload app Kobiton'
-author: 'Kobiton'
-description: 'Action to upload mobile app to Kobiton Apps Repo'
+name: 'Test action leesown'
+author: 'Lee Sown'
+description: 'First action of sonhmle for learning'
 inputs:
   kobi_username:
     description: The user in Kobiton
@@ -8,24 +8,24 @@ inputs:
   kobi_api_key:
     description: Specific key to access Kobiton API
     required: true
-  # upload_app_id:
-  #   description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton
-  #   required: false
-  # app_access:
-  #   description: You can either make this app private or available for everyone in the organization (private vs. public)
-  #   required: true
-  #   default: 'public'
-  # app_name:
-  #   description: Title of the app to be built
-  #   required: true
-  #   default: 'App-test-name'
-  # app_path:
-  #   description: Path to the app .apk or .ipa file (relative to your current point)
-  #   required: true
-  # app_suffix:
-  #   description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
-  #   required: true
-  #   default: 'apk'
+  upload_app_id:
+    description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton
+    required: false
+  app_access:
+    description: You can either make this app private or available for everyone in the organization (private vs. public)
+    required: true
+    default: 'public'
+  app_name:
+    description: Title of the app to be built
+    required: true
+    default: 'App-test-name'
+  app_path:
+    description: Path to the app .apk or .ipa file (relative to your current point)
+    required: true
+  app_suffix:
+    description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
+    required: true
+    default: 'apk'
   executor_url:
     description: Kobiton Automation Test Executor URL to perform the test, please contact our Support Team to get this
     required: true
@@ -78,18 +78,18 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    # - run: |
-    #     chmod u+x ${{ github.action_path }}/upload.sh
-    #     ${{ github.action_path }}/upload.sh
-    #   shell: bash
-    #   env:
-    #     KOBI_USERNAME: ${{ inputs.kobi_username }}
-    #     KOBI_API_KEY: ${{ inputs.kobi_api_key }}
-    #     UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
-    #     APP_ACCESS: ${{ inputs.app_access }}
-    #     APP_NAME: ${{ inputs.app_name }}
-    #     APP_PATH: ${{ inputs.app_path }}
-    #     APP_SUFFIX: ${{ inputs.app_suffix }}
+    - run: |
+        chmod u+x ${{ github.action_path }}/upload.sh
+        ${{ github.action_path }}/upload.sh
+      shell: bash
+      env:
+        KOBI_USERNAME: ${{ inputs.kobi_username }}
+        KOBI_API_KEY: ${{ inputs.kobi_api_key }}
+        UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
+        APP_ACCESS: ${{ inputs.app_access }}
+        APP_NAME: ${{ inputs.app_name }}
+        APP_PATH: ${{ inputs.app_path }}
+        APP_SUFFIX: ${{ inputs.app_suffix }}
     - run: |
         chmod u+x ${{ github.action_path }}/test.sh
         ${{ github.action_path }}/test.sh
@@ -97,11 +97,11 @@ runs:
       env:
         KOBI_USERNAME: ${{ inputs.kobi_username }}
         KOBI_API_KEY: ${{ inputs.kobi_api_key }}
-        # UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
-        # APP_ACCESS: ${{ inputs.app_access }}
-        # APP_NAME: ${{ inputs.app_name }}
-        # APP_PATH: ${{ inputs.app_path }}
-        # APP_SUFFIX: ${{ inputs.app_suffix }}
+        UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
+        APP_ACCESS: ${{ inputs.app_access }}
+        APP_NAME: ${{ inputs.app_name }}
+        APP_PATH: ${{ inputs.app_path }}
+        APP_SUFFIX: ${{ inputs.app_suffix }}
         EXECUTOR_URL: ${{ inputs.executor_url }}
         EXECUTOR_USERNAME: ${{ inputs.executor_username }}
         EXECUTOR_PASSWORD: ${{ inputs.executor_password }}

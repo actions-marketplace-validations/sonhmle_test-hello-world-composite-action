@@ -2,7 +2,7 @@
 set -ex
 
 printf "\n=====================================================================================\n"
-printf "KOBITON APP UPLOAD PLUGIN"
+printf "KOBITON APP UPLOAD ACTION"
 printf "\n=====================================================================================\n\n"
 
 printf "Installing ack...\n"
