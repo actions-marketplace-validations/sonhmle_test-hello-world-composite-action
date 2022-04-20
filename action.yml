@@ -8,38 +8,114 @@ inputs:
   kobi_api_key:
     description: Specific key to access Kobiton API
     required: true
-  upload_app_id:
-    description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton
+  # upload_app_id:
+  #   description: App ID in Kobiton - use this in case you want to upload new version of an existing app in Kobiton
+  #   required: false
+  # app_access:
+  #   description: You can either make this app private or available for everyone in the organization (private vs. public)
+  #   required: true
+  #   default: 'public'
+  # app_name:
+  #   description: Title of the app to be built
+  #   required: true
+  #   default: 'App-test-name'
+  # app_path:
+  #   description: Path to the app .apk or .ipa file (relative to your current point)
+  #   required: true
+  # app_suffix:
+  #   description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
+  #   required: true
+  #   default: 'apk'
+  executor_url:
+    description: Kobiton Automation Test Executor URL to perform
+    required: true
+  executor_username:
+    description: Kobiton Automation Test Executor username
+    required: true
+  executor_password:
+    description: Kobiton Automation Test Executor password
+    required: true
+  git_repo_url:
+    description: Link to your Git repository
+    required: true
+  git_repo_branch:
+    description: The branch you want to execute automation test with
+    required: true
+  git_repo_ssh_key:
+    description: It is used when your Git repository is private
     required: false
-  app_access:
-    description: You can either make this app private or available for everyone in the organization (private vs. public)
+  app_id:
+    description: App ID or App URL to use in test script
+    required: false
+  use_custom_device:
+    description: Check if you want to execute one or some test cases with a specific Kobiton Cloud Device. If you already set your device information in your test script, leave this field unchecked
+    required: false
+    default: 'false'
+  device_name:
+    description: Kobiton Device Name
+    required: false
+  device_platform_version:
+    description: Kobiton Device platform version
+    required: false
+  device_platform:
+    description: Kobiton Device platform
+    required: false
+  root_directory:
+    description: Input the root directory of your project
     required: true
-    default: 'public'
-  app_name:
-    description: Title of the app to be built
+    default: '/'
+  command:
+    description: Command lines to install dependencies and execute your automation test script. These commands will run from the root directory of your project (i.e 'mvn test')
     required: true
-    default: 'App-test-name'
-  app_path:
-    description: Path to the app .apk or .ipa file (relative to your current point)
+  wait_for_execution:
+    description: Check if you want to release the pipeline to wait until your automation testing is completed or failed, then print out the console log and test result
     required: true
-  app_suffix:
-    description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
-    required: true
-    default: 'apk'
+    default: 'true'
+  log_type:
+    description: Log type to be showed. Choose Combined to show logs in chronological order (default), or specify a type of log ('output', 'error')
+    required: false
+    default: 'combined'
 runs:
   using: 'composite'
   steps:
+    # - run: |
+    #     chmod u+x ${{ github.action_path }}/upload.sh
+    #     ${{ github.action_path }}/upload.sh
+    #   shell: bash
+    #   env:
+    #     KOBI_USERNAME: ${{ inputs.kobi_username }}
+    #     KOBI_API_KEY: ${{ inputs.kobi_api_key }}
+    #     UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
+    #     APP_ACCESS: ${{ inputs.app_access }}
+    #     APP_NAME: ${{ inputs.app_name }}
+    #     APP_PATH: ${{ inputs.app_path }}
+    #     APP_SUFFIX: ${{ inputs.app_suffix }}
     - run: |
-        chmod u+x ${{ github.action_path }}/upload.sh
-        ${{ github.action_path }}/upload.sh
+        chmod u+x ${{ github.action_path }}/test.sh
+        ${{ github.action_path }}/test.sh
       shell: bash
       env:
         KOBI_USERNAME: ${{ inputs.kobi_username }}
         KOBI_API_KEY: ${{ inputs.kobi_api_key }}
-        UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
-        APP_ACCESS: ${{ inputs.app_access }}
-        APP_NAME: ${{ inputs.app_name }}
-        APP_PATH: ${{ inputs.app_path }}
-        APP_SUFFIX: ${{ inputs.app_suffix }}
+        # UPLOAD_APP_ID: ${{ inputs.upload_app_id }}
+        # APP_ACCESS: ${{ inputs.app_access }}
+        # APP_NAME: ${{ inputs.app_name }}
+        # APP_PATH: ${{ inputs.app_path }}
+        # APP_SUFFIX: ${{ inputs.app_suffix }}
+        EXECUTOR_URL: ${{ inputs.executor_url }}
+        EXECUTOR_USERNAME: ${{ inputs.executor_username }}
+        EXECUTOR_PASSWORD: ${{ inputs.executor_password }}
+        GIT_REPO_URL: ${{ inputs.git_repo_url }}
+        GIT_REPO_BRANCH: ${{ inputs.git_repo_branch }}
+        GIT_REPO_SSH_KEY: ${{ inputs.git_repo_ssh_key }}
+        APP_ID: ${{ inputs.app_id }}
+        USE_CUSTOM_DEVICE: ${{ inputs.use_custom_device }}
+        DEVICE_NAME: ${{ inputs.device_name }}
+        DEVICE_PLATFORM_VERSION: ${{ inputs.device_platform_version }}
+        DEVICE_PLATFORM: ${{ inputs.device_platform }}
+        ROOT_DIRECTORY: ${{ inputs.root_directory }}
+        COMMAND: ${{ inputs.command }}
+        WAIT_FOR_EXECUTION: ${{ inputs.wait_for_execution }}
+        LOG_TYPE: ${{ inputs.log_type }}
 branding:
   color: purple
