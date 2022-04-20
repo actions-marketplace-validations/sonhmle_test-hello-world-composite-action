@@ -23,7 +23,7 @@ inputs:
     description: Path to the app .apk or .ipa file (relative to your current point)
     required: true
   app_suffix:
-    description: Type of the app tol be uploaded (apk for Android or ipa for iOS)
+    description: Type of the app to be uploaded (apk for Android or ipa for iOS)
     required: true
     default: 'apk'
   executor_url:
@@ -119,3 +119,4 @@ runs:
         LOG_TYPE: ${{ inputs.log_type }}
 branding:
   color: purple
+  icon: upload
