@@ -37,8 +37,8 @@ curl --silent -X POST https://api.kobiton.com/v1/apps/uploadUrl \
 
 cat ".tmp.upload-url-response.json"
 
-UPLOAD_URL=$(ack -o -h --match '(?<=url\":")([_\%\&=\?\.aA-zZ0-9:/-]*)' ".tmp.upload-url-response.json")
-KAPPPATH=$(ack -o -h --match '(?<=appPath\":")([_\%\&=\?\.aA-zZ0-9:/-]*)' ".tmp.upload-url-response.json")
+UPLOAD_URL=$(cat ".tmp.upload-url-response.json" | ack -o --match '(?<=url\":")([_\%\&=\?\.aA-zZ0-9:/-]*)')
+KAPPPATH=$(cat ".tmp.upload-url-response.json" | ack -o --match '(?<=appPath\":")([_\%\&=\?\.aA-zZ0-9:/-]*)')
 
 echo "Uploading: ${APP_NAME} (${APP_PATH})"
 echo "URL: ${UPLOAD_URL}"
@@ -61,7 +61,7 @@ curl -X POST https://api.kobiton.com/v1/apps \
 echo "Response:"
 cat ".tmp.upload-app-response.json"
 
-APP_VERSION_ID=$(ack -o -h --match '(?<=versionId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)' ".tmp.upload-app-response.json")
+APP_VERSION_ID=$(cat ".tmp.upload-app-response.json" | ack -o --match '(?<=versionId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)')
 
 # Kobiton need some times to update the appId for new appVersion
 sleep 30
@@ -71,7 +71,7 @@ curl -X GET https://api.kobiton.com/v1/app/versions/"$APP_VERSION_ID" \
     -H "Accept: application/json" \
     -o ".tmp.get-appversion-response.json"
 
-UPLOAD_APP_ID=$(ack -o -h --match '(?<=appId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)' ".tmp.get-appversion-response.json")
+UPLOAD_APP_ID=$(cat ".tmp.get-appversion-response.json" | ack -o --match '(?<=appId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)')
 
 curl -X PUT https://api.kobiton.com/v1/apps/"$UPLOAD_APP_ID"/"$APP_ACCESS" \
     -H "Authorization: Basic $BASICAUTH"
