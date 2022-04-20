@@ -117,5 +117,6 @@ runs:
         COMMAND: ${{ inputs.command }}
         WAIT_FOR_EXECUTION: ${{ inputs.wait_for_execution }}
         LOG_TYPE: ${{ inputs.log_type }}
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
 branding:
   color: purple
